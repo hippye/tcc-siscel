@@ -1,0 +1,143 @@
+#propselect {
+    width: 10rem;
+}
+
+#cedulad {
+    background-color: rgba(177, 223, 187, 0.5);
+}
+
+#cedulas {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+#cedulaa {
+    background-color: rgba(177, 223, 187, 0.5);
+}
+
+.rotulo {
+    width: 100% !important;
+    font-size: 1rem !important;
+}
+
+.chapa+.card {
+    box-shadow: none;
+    border: 2px solid transparent;
+    border-radius: 4px;
+}
+
+.chapa+.card:hover {
+    cursor: pointer;
+}
+
+.chapa:checked+.card {
+    border: 2px solid var(--primary);
+    transition: border .3s;
+}
+
+.chapa:checked+.card:after {
+    content: '\e5ca';
+    color: #AFB8EA;
+    font-family: 'Material Icons';
+    font-size: 24px;
+    animation-name: fadeInCheckbox;
+    animation-duration: .5s;
+    animation-timing-function: cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes fadeInCheckbox {
+    from {
+        opacity: 0;
+        transform: rotateZ(-20deg);
+    }
+    to {
+        opacity: 1;
+        transform: rotateZ(0deg);
+    }
+}
+
+.fotochapa {
+    height: 10rem;
+}
+
+.or-container {
+    align-items: center;
+    color: #ccc;
+    display: flex;
+    margin: 25px 0;
+}
+
+.line-separator {
+    background-color: #ccc;
+    flex-grow: 5;
+    height: 1px;
+}
+
+.or-label {
+    flex-grow: 1;
+    margin: 0 15px;
+    text-align: center;
+}
+
+.linha {
+    cursor: pointer;
+}
+
+#barra-progresso {
+    max-width: 500px;
+    margin: auto;
+    display: block;
+}
+
+#barra-progresso table{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    border: 0;
+}
+
+#barra-progresso tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+#barra-progresso tbody tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+#barra-progresso td {
+    display: table-cell;
+    vertical-align: inherit;
+    padding: 0.3em;
+}
+#barra-progresso td.selected {
+    background-color: #fff3cd;
+    color: black;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+#barra-progresso td.unselected {
+    color: black;
+    border: 1px solid #333;
+}
+
+#tabela-progresso {
+    display: table;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+
+#cedula {
+    font-size: 1.4em;
+}
+
+#revisao {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+}

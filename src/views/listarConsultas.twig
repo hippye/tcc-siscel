@@ -1,0 +1,49 @@
+{% extends "menu.twig" %}
+
+{% block conteudo %}
+    <div class="container mb-3 mt-3">
+        <div class="col-md-12 mr-auto input-group mb-2">
+            <input type="search" placeholder="Pesquisar" id="filtro" class="form-control" aria-controls="listagem"
+                   onkeyup="tabelaPessoas.search((this).value).draw()">
+            <div class="input-group-append">
+                <button class="btn btn-secondary">
+                    <i class="bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <table class="table table-borderless table-striped table-hover table-responsive-md" id="listagem">
+            <thead class="table-light">
+            <tr>
+                <th scope="col">
+                    Descrição
+                </th>
+                <th scope="col">
+                    Permissão
+                </th>
+                <th>
+                    Situação
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            {% for item in consultasEleitorais %}
+                <tr class="linha" onclick="window.location.href='consulta/{{ item.codConsultaEleitoral }}'">
+                    <td>
+                        <i class="bi-pencil-square"></i> {{ item.descricao }}
+                    </td>
+                    <td>
+                        {{ item.descricaoCargo }}
+                    </td>
+                    <td>
+                        {% if item.dataZerezimo == null %}
+                            Em andamento
+                        {% else %}
+                            Pronto para abertura da votação
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

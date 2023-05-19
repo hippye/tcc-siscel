@@ -1,0 +1,65 @@
+{% extends 'votacao/inicio.twig' %}
+
+{% block conteudo %}
+    <div class="container justify-content-center">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">{{ titulo }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div id="barra-progresso">
+                <table id="tabela-progresso">
+                    <tbody>
+                    <tr>
+                        <td class="unselected">
+                            1) Selecione
+                        </td>
+                        <td class="unselected">
+                            2) Revise
+                        </td>
+                        <td class="selected">
+                            3) Registre
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 p-4">
+                <h3><strong>Revise seu voto</strong></h3>
+            </div>
+        </div>
+        <form method="post" action="/votacao/depositar/{{ idVotacao }}" id="cedula">
+            <div class="row">
+                <div class="col-md-12" id="revisao">
+                    <div class="row">
+                        <div>
+                            <input type="hidden" name="idVotacao" value="{{ idVotacao }}">
+                            Selecione a chapa:
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <icon class="bi bi-check text-info"></icon>
+                            <strong>{{ chapa }}</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <a href="/votacao/{{ idVotacao }}" class="link-info">Alterar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container justify-content-center text-center p-4">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Próximo</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

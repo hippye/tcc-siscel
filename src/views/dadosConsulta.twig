@@ -1,0 +1,912 @@
+{% extends "menu.twig" %}
+
+{% block conteudo %}
+    <nav>
+        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+            <button type="button" class="nav-link text-black-50 {{ abas.informacoesAba }}" id="informacao-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#painel-informacao" role="tab" aria-controls="painel-informacao"
+                    aria-selected="true">
+                Informações
+            </button>
+            <button type="button" class="nav-link text-black-50 {{ abas.comissaoAba }}" id="comissao-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#painel-comissao" role="tab" aria-controls="painel-comissao" aria-selected="false">
+                Comissão
+            </button>
+            <button type="button" class="nav-link text-black-50 {{ abas.chapasAba }}" id="chapas-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#painel-chapas" role="tab" aria-controls="painel-chapas" aria-selected="false">
+                Chapas
+            </button>
+            <button type="button" class="nav-link text-black-50 {{ abas.proporcaoAba }}" id="proporcao-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#painel-proporcao" role="tab" aria-controls="painel-proporcao"
+                    aria-selected="false">
+                Proporções
+            </button>
+            <button type="button" class="nav-link text-black-50 {{ abas.urnasAba }}" id="urnas-tab" data-bs-toggle="tab"
+                    data-bs-target="#painel-urnas" role="tab" aria-controls="painel-urnas" aria-selected="false">
+                Urnas
+            </button>
+            <button type="button" class="nav-link text-black-50 {{ abas.eleitoresAba }}" id="eleitores-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#painel-eleitores" role="tab" aria-controls="painel-eleitores"
+                    aria-selected="false">
+                Eleitores
+            </button>
+            <button type="button" class="nav-link text-black-50" id="relatorio-tab" data-bs-toggle="tab"
+                    data-bs-target="#painel-relatorio" role="tab" aria-controls="painel-relatorio"
+                    aria-selected="false">
+                Relatórios
+            </button>
+            {#            <button type="button" class="nav-link text-black-50 {{ abas.auditoriaAba }}" id="auditoria-tab" #}
+            {#                    data-bs-toggle="tab" #}
+            {#                    data-bs-target="#painel-auditoria" role="tab" aria-controls="painel-auditoria" #}
+            {#                    aria-selected="false"> #}
+            {#                Auditoria #}
+            {#            </button> #}
+        </div>
+    </nav>
+    <div class="tab-content" id="infoConsulta">
+        <div class="tab-pane fade {{ abas.informacoes }}" id="painel-informacao" role="tabpanel"
+             aria-labelledby="informacao-tab"
+             tabindex="0">
+            <div class="container pb-4">
+                <form method="post" action="{{ action }}">
+                    <div class="row">
+                        <div class="text-center">
+                            <h5>Informações da Consulta</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md mb-3">
+                            <div class="form-floating">
+                                <input type="text" name="id" class="form-control" id="id"
+                                       value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}"
+                                       readonly placeholder="Código"/>
+                                <label for="id">Eleição</label>
+                            </div>
+                        </div>
+                        <div class="col-md mb-3">
+                            <div class="form-check form-switch col-md mt-3">
+                                <label class="form-label" for="usarLDAP">Utilizar LDAP</label>
+                                <input class="form-check-input form" type="checkbox" role="switch" name="usarLDAP"
+                                       id="usarLDAP"
+                                       {% if attribute(consulta, 'getUsarLdap') == true %}checked{% endif %}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md mb-3">
+                            <div class="form-floating">
+                                <input type="text" name="descricao" class="form-control " id="descricao"
+                                       value="{{ attribute(consulta, 'getDescricao') }}"
+                                       contentEditable="true" placeholder="Descricao" required/>
+                                <label for="descricao">Descrição</label>
+                                <input type="hidden" name="codConsultaEleitoral"
+                                       value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input type="date" name="dataInicio" class="form-control" id="dataInicio"
+                                       value="{{ attribute(consulta, 'getDataInicio') }}"
+                                       required
+                                       placeholder="Data Inicio"/>
+                                <label for="dataInicio">Data Início</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input type="date" name="dataEncerramento" class="form-control" id="dataFim"
+                                       value="{{ attribute(consulta, 'getDataEncerramento') }}"
+                                       required
+                                       placeholder="Data encerramento"/>
+                                <label for="dataFim">Data encerramento</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md mb-3">
+                            <div class="form-floating">
+                                <input type="time" name="horaInicio" class="form-control" id="horaInicio"
+                                       value="{{ attribute(consulta, 'getHoraInicio') }}" required
+                                       placeholder="Hora Início"/>
+                                <label for="horaInicio">Hora Início</label>
+                            </div>
+                        </div>
+                        <div class="col-md mb-3">
+                            <div class="form-floating">
+                                <input type="time" name="horaEncerramento" class="form-control" id="horaFim"
+                                       value="{{ attribute(consulta, 'getHoraEncerramento') }}" required
+                                       placeholder="Hora encerramento"/>
+                                <label for="horaFim">Hora encerramento</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container text-center">
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-primary">
+                                    Alterar
+                                </button>
+                                {% if admnistrador %}
+                                    <button type="button" class="btn btn-info"
+                                            onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/excluir'">
+                                        Excluir Consulta
+                                    </button>
+                                {% endif %}
+                                <button type="button" class="btn btn-secondary"
+                                        onclick="window.location.href='/consulta'">
+                                    Voltar
+                                </button>
+                                {% if congelar %}
+                                    <button type="button" class="btn btn-info  m-1"
+                                            onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/congelar'">
+                                        Congelar Consulta Eleitoral
+                                    </button>
+                                {% endif %}
+                                {% if enviarLink %}
+                                    <button type="button" class="btn btn-info  m-1"
+                                            onclick="enviarLink('/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/enviarLink')">
+                                        Enviar link para votação
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade {{ abas.comissao }}" id="painel-comissao" role="tabpanel"
+             aria-labelledby="comissao-tab" tabindex="0">
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="text-center">
+                        <h5>Membros da Comissao Eleitoral</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <table class="table table-borderless table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    CPF
+                                </th>
+                                <th>
+                                    Nome
+                                </th>
+                                <th>
+                                    Cargo
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in membros %}
+                                <tr class="linha">
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/membro/{{ item.codMembroComissao }}'">
+                                        {{ item.cpf }}
+                                    </td>
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/membro/{{ item.codMembroComissao }}'">
+                                        {{ item.nome }}
+                                    </td>
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/membro/{{ item.codMembroComissao }}'">
+                                        {{ item.cargo }}
+                                    </td>
+                                    <td>
+                                        <i class="bi-pencil-square"></i>
+                                        <button type="button" class="btn btn-sm btn-danger bi-trash"
+                                                onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/membro/{{ item.codMembroComissao }}/excluir'">
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#inserirMembro">
+                            Inserir membro
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="inserirMembro" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="exampleModalLabel">Inserir membro</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/membro/inserir"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-12">
+                                            <input type="hidden" name="consulta"
+                                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                                            <label for="pessoa">Nome:</label>
+                                            <select type="search" class="form-control"
+                                                    data-placeholder="Selecione a pessoa" name="pessoa" id="pessoa"
+                                                    required>
+                                                <option value=""></option>
+                                                {% for pessoa in usuarios %}
+                                                    <option value="{{ pessoa.codUsuario }}">{{ pessoa.cpf }}
+                                                        - {{ pessoa.nome }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="cargo">Permissão:</label>
+                                            <select class="form-control" name="cargo" id="cargo" required>
+                                                <option>Selecione a permissão</option>
+                                                {% for cargo in cargos %}
+                                                    {% if cargo.codCargoComissao == presidente %}
+                                                        {% set continue = true %}
+                                                    {% endif %}
+                                                    <option value="{{ cargo.codCargoComissao }}">{{ cargo.descricao }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 pt-4">
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade {{ abas.chapas }}" id="painel-chapas" role="tabpanel" aria-labelledby="chapas-tab"
+             tabindex="0">
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="text-center">
+                        <h5>Chapas</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-borderless table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                Número da chapa
+                            </th>
+                            <th>
+                                Descrição
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in chapas %}
+                            <tr style="cursor:pointer;">
+                                <td class="text-left"
+                                    onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/chapa/{{ item.codChapa }}', 'Chapa'">
+                                    <button type="button" class="btn btn-sm">
+                                        <span class="oi oi-pencil" title="icon name" aria-hidden="true"></span>
+                                    </button>
+                                    {{ item.numeroChapa }}
+                                </td>
+                                <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/chapa/{{ item.codChapa }}', 'Chapa'">
+                                    {{ item.descricao }}
+                                </td>
+                                <td class="justify-content-end-content-end">
+                                    <button class="btn btn-sm btn-danger pt-0 bi-trash"
+                                            onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/chapa/{{ item.codChapa }}/excluir'">
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#inserirChapa">
+                            Inserir chapa
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="inserirChapa" tabindex="-1" aria-labelledby="modal-inserir-chapa-label"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="modal-inserir-chapa-label">Inserir chapa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/chapa/inserir"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="hidden" name="consulta"
+                                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                                            <input type="text" name="descricao" class="form-control" id="descricao"
+                                                   required/>
+                                            <label for="descricao">Nome da chapa</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" name="numeroChapa" class="form-control"
+                                                   id="numeroChapa" required/>
+                                            <label for="numeroChapa">Número da chapa</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 pt-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Inserir
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade {{ abas.proporcao }}" id="painel-proporcao" role="tabpanel"
+             aria-labelledby="proporcao-tab" tabindex="0">
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="text-center">
+                        <h5>Proporção</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container col-md-8">
+                        <table class="table table-borderless table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Vinculo
+                                </th>
+                                <th>
+                                    Peso
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for proporcao in proporcoes %}
+                                <tr style="cursor: pointer">
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/proporcao/{{ proporcao.codProporcao }}'">
+                                        {{ proporcao.vinculo }}
+                                    </td>
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/proporcao/{{ proporcao.codProporcao }}'">
+                                        {{ proporcao.peso }}
+                                    </td>
+                                    <td class="text-right">
+                                        <button type="button" class="btn  bi-pencil-square"
+                                                onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/proporcao/{{ proporcao.codProporcao }}'">
+                                        </button>
+                                        <button class="btn btn-sm btn-danger bi-trash" aria-label="Deletar"
+                                                onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/proporcao/{{ proporcao.codProporcao }}/excluir'">
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#inserirProporcao">
+                            Inserir proporção
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="inserirProporcao" tabindex="-1" aria-labelledby="modal-inserir-proporcao-label"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="modal-inserir-proporcao-label">Inserir proporçào</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/proporcao/inserir"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="hidden" name="consulta"
+                                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                                            <select name="vinculo" class="form-select" id="vinculo"
+                                                    data-placeholder="Selecione o vinculo" required>
+                                                {% for vinculo in vinculos %}
+                                                    <option value="{{ vinculo.codVinculo }}">{{ vinculo.descricao }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <label for="vinculo">Vinculo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" name="peso" class="form-control"
+                                                   id="peso" required/>
+                                            <label for="peso">Peso</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 pt-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Inserir
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade {{ abas.urnas }}" id="painel-urnas" role="tabpanel" aria-labelledby="urnas-tab"
+             tabindex="0">
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="text-center">
+                        <h5>Urnas</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container col-md-8 mr-auto ml-auto">
+                        <table class="table table-striped table-borderless table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Descrição
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for urna in urnas %}
+                                <tr style="cursor: pointer">
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/urna/{{ urna.codUrna }}'">
+                                        <button class="btn bi-pencil-square"></button> {{ urna.descricao }}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger bi-trash" aria-label="Deletar"
+                                                onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/urna/{{ urna.codUrna }}/excluir'">
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="container text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#inserirUrna">
+                                Inserir urna
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#inserirUrnasCsv">
+                                Inserir urnas usando CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="inserirUrna" tabindex="-1" aria-labelledby="modal-inserir-urna-label"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="modal-inserir-urna-label">Inserir urna</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/urna/inserir"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="hidden" name="consulta"
+                                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                                            <input type="text" name="descricao" class="form-control" id="descricao"
+                                                   required/>
+                                            <label for="descricao">Nome da urna</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 pt-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Inserir
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="inserirUrnasCsv" tabindex="-1" aria-labelledby="modal-inserir-urnascsv-label"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="modal-inserir-urnascsv-label">Inserir urna com CSV</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/urna/csv"
+                                  method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="alert alert-info" role="alert">
+                                            <p class="mb-0">
+                                                O arquivo CSV deve conter uma coluna com o nome "descricao" e
+                                                cada linha deve conter o nome da urna.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-group">
+                                            <input type="hidden" name="consulta"
+                                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                                            <label for="arquivo">Arquivo CSV</label>
+                                            <input type="file" name="arquivo" class="form-control form-control-file"
+                                                   id="descricao"
+                                                   required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 pt-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Inserir
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade {{ abas.eleitores }}" id="painel-eleitores" role="tabpanel"
+             aria-labelledby="eleitores-tab" tabindex="0">
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="text-center">
+                        <h5>Eleitores</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container col-md-12 mr-auto ml-auto">
+                        <div class="col-md-12 mr-auto p-2 input-group">
+                            <input type="search" placeholder="Pesquisar" id="filtro" class="form-control" aria-controls="eleitores"
+                                   onkeyup="tabelaEleitores.search((this).value).draw()">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary">
+                                    <i class="bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-borderless table-hover" id="eleitores">
+                            <thead>
+                            <tr>
+                                <th>
+                                    CPF
+                                </th>
+                                <th>
+                                    Nome
+                                </th>
+                                <th>
+                                    E-mail
+                                </th>
+                                <th>
+                                    Vinculo
+                                </th>
+                                <th>
+                                    Urna
+                                </th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for eleitor in eleitores %}
+                                <tr style="cursor: pointer">
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/{{ eleitor.codEleitor }}'">
+                                        <button class="btn bi-pencil-square"></button> {{ eleitor.cpf }}
+                                    </td>
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/{{ eleitor.codEleitor }}'">
+                                        {{ eleitor.nome }}
+                                    </td>
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/{{ eleitor.codEleitor }}'">
+                                        {{ eleitor.email }}
+                                    </td>
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/{{ eleitor.codEleitor }}'">
+                                        {{ eleitor.descricaoVinculo }}
+                                    </td>
+                                    <td onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/{{ eleitor.codEleitor }}'">
+                                        {{ eleitor.descricaoUrna }}
+                                    </td>
+                                    <td class="text-right">
+                                        <button type="button" class="btn btn-danger bi-trash" aria-label="Deletar"
+                                                onclick="window.location.href='/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/{{ eleitor.codEleitor }}/excluir'">
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="container text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 pt-3">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#inserirEleitor">
+                                Inserir eleitor
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#inserirEleitoresCsv">
+                                Inserir eleitores com CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="inserirEleitor" tabindex="-1" aria-labelledby="modal-inserir-eleitor-label"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="modal-inserir-eleitor-label">Inserir urna</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/inserir"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="hidden" name="consulta"
+                                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                                            <input type="text" name="cpf" class="form-control" id="cpf"
+                                                   required/>
+                                            <label for="descricao">CPF</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" name="nome" class="form-control" id="nome"
+                                                   required/>
+                                            <label for="nome">Nome</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" name="email" class="form-control" id="email"
+                                                   required/>
+                                            <label for="email">E-mail</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" name="vinculo" id="vinculo" required>
+                                                {% for vinculo in vinculos %}
+                                                    <option value="{{ vinculo.codVinculo }}">{{ vinculo.descricao }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <label for="vinculo">Vinculo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" name="urna" id="urna" required>
+                                                <option></option>
+                                                {% for urna in urnas %}
+                                                    <option value="{{ urna.codUrna }}">{{ urna.descricao }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <label for="vinculo">Urna</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 pt-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Inserir
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="inserirEleitoresCsv" tabindex="-1" aria-labelledby="modal-inserir-urnacsv-label"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="modal-inserir-urnacsv-label">Inserir urna com CSV</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/consulta/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/eleitor/csv"
+                                  method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="alert alert-info" role="alert">
+                                            <p class="mb-0">
+                                                O arquivo CSV deve conter 4 colunas contendo o CPF, nome, e-mail e código do vinculo, sendo 1 - docente, 2 - servidor e 3 - aluno,
+                                                e cada linha deve conter os dados de apenas um eleitor.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-group">
+                                            <input type="hidden" name="consulta"
+                                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                                            <label for="arquivo">Arquivo CSV</label>
+                                            <input type="file" name="arquivo" class="form-control form-control-file"
+                                                   id="descricao"
+                                                   required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" name="urna" id="urna" required>
+                                                <option></option>
+                                                {% for urna in urnas %}
+                                                    <option value="{{ urna.codUrna }}">{{ urna.descricao }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <label for="vinculo">Urna</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 pt-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Inserir
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade {{ abas.relatorio }}" id="painel-relatorio" role="tabpanel"
+             aria-labelledby="relatorio-tab" tabindex="0">
+            <div class="container pb-4">
+                <div class="row">
+                    <div>
+                        <h3 class="text-center">Relatórios</h3>
+                        <div class="row justify-content-center">
+                            <div class="container text-center">
+                                <div class="form-group col-md mb-3">
+                                    <button type="button" class="btn btn-primary"
+                                            onclick="window.open('{{ attribute(consulta, 'getCodConsultaEleitoral') }}/relatorio/zerezimo', '_blank')">
+                                        Zerésimo das urnas
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            onclick="window.open('{{ attribute(consulta, 'getCodConsultaEleitoral') }}/relatorio/totalizar', '_blank')">
+                                        Totalizar votos
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12 mr-auto ml-auto">
+                                    <table class="table table-borderless table-hover table-striped">
+                                        <tbody>
+                                        {% for item in relatorios %}
+                                            {% if item != '.' or item != '..' %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="/uploads/eleicoes/{{ attribute(consulta, 'getCodConsultaEleitoral') }}/{{ item }}"
+                                                           target="_blank">{{ item }}</a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% else %}
+                                            <tr>
+                                                <td>
+                                                    Sem relatórios no momento.
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#        <div class="tab-pane fade {{ abas.auditoria }}" id="painel-auditoria" role="tabpanel" #}
+        {#             aria-labelledby="auditoria-tab" tabindex="0"> #}
+        {#            <div class="container pb-4"> #}
+        {#                <div class="row"> #}
+        {#                    <div class="text-center"> #}
+        {#                        <h5>Auditoria</h5> #}
+        {#                    </div> #}
+        {#                </div> #}
+        {#                <div class="row"> #}
+        {#                    his is some placeholder content the Home tab's associated content. Clicking another tab will toggle #}
+        {#                    the visibility of this one for the next. The tab JavaScript swaps classes to control the content #}
+        {#                    visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation. #}
+        {#                </div> #}
+        {#            </div> #}
+        {#        </div> #}
+    </div>
+{% endblock %}

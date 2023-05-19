@@ -1,0 +1,75 @@
+{% extends 'menu.twig' %}
+
+{% block conteudo %}
+    <div class="container pt-5">
+        <form action="/consulta/{{ consulta }}/eleitor/{{ eleitor.codEleitor }}"
+              method="post">
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="hidden" name="consulta"
+                               value="{{ consulta }}">
+                        <input type="hidden" name="eleitor" value="{{ eleitor.codEleitor }}">
+                        <input type="text" name="cpf" class="form-control" id="cpf"
+                               required value="{{ eleitor.cpf }}"/>
+                        <label for="descricao">CPF</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="text" name="nome" class="form-control" id="nome"
+                               required value="{{ eleitor.nome }}"/>
+                        <label for="nome">Nome</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="text" name="email" class="form-control" id="email"
+                               required value="{{ eleitor.email }}"/>
+                        <label for="email">E-mail</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <select class="form-select" name="vinculo" id="vinculo" required>
+                            {% for vinculo in vinculos %}
+                                <option value="{{ vinculo.codVinculo }}"{% if vinculo.codVinculo == eleitor.codVinculo %}selected{% endif %}>{{ vinculo.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="vinculo">Vinculo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <select class="form-select" name="urna" id="urna" required>
+                            <option></option>
+                            {% for urna in urnas %}
+                                <option value="{{ urna.codUrna }}"{% if urna.codUrna == eleitor.codUrna %}selected{% endif %}>{{ urna.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="vinculo">Urna</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-3 pt-4 pb-3">
+                    <button type="submit" class="btn btn-primary">
+                        Salvar
+                    </button>
+                    <button type="button" class="btn btn-secondary"
+                            onclick="window.location.href='/consulta/{{ consulta }}'">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

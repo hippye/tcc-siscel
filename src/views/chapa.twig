@@ -1,0 +1,41 @@
+{% extends "menu.twig" %}
+
+{% block conteudo %}
+    <div class="container pt-5">
+        <form action="/consulta/{{ chapa.CodConsultaEleitoral }}/chapa/{{ chapa.codChapa }}/alterar"
+              method="post">
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="hidden" name="consulta"
+                               value="{{ chapa.codConsultaEleitoral }}">
+                        <input type="text" name="descricao" class="form-control" id="descricao"
+                               value="{{ chapa.descricao }}"
+                               required/>
+                        <label for="descricao">Nome da chapa</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="number" name="numeroChapa" class="form-control" value="{{ chapa.numeroChapa }}"
+                               id="numeroChapa" required/>
+                        <label for="numeroChapa">Número da chapa</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-3 pt-4 pb-3">
+                    <button type="submit" class="btn btn-primary">
+                        Alterar
+                    </button>
+                    <button type="button" class="btn btn-secondary"
+                            onclick="window.location.href='/consulta/{{ chapa.codConsultaEleitoral }}'">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

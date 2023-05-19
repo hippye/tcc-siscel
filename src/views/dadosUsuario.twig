@@ -1,0 +1,160 @@
+{% extends "menu.twig" %}
+
+{% block conteudo %}
+    <div class="container pb-4">
+        <h3 class="text-center">{{ titulo }}</h3>
+        <form method="post" action="{{ action }}">
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="text" name="id" class="form-control" id="id" value="{{ usuario.codUsuario }}"
+                               readonly placeholder="Código"/>
+                        <label for="id">Código</label>
+                    </div>
+                </div>
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="text" name="cpf" class="form-control " id="cpf" value="{{ usuario.cpf }}"
+                               contentEditable="true" data-mask="000.000.000-00" placeholder="999.999.999-99" required/>
+                        <label for="cpf">CPF</label>
+                        <input type="hidden" name="codPessoa" value="{{ usuario.codUsuario }}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="text" name="nome" class="form-control" id="nome" value="{{ usuario.nome }}"
+                               required
+                               placeholder="Nome"/>
+                        <label for="nome">Nome</label>
+                    </div>
+                </div>
+            </div>
+            {% if senha %}
+                <div class="row">
+                    <div class="col-md mb-3">
+                        <div class="form-floating">
+                            <input type="password" name="senha" class="form-control" id="senha"
+                                   pattern=".{4,}" required title="Mínimo de 4 caracteres" required
+                                   placeholder="Senha"/>
+                            <label for="senha">Senha</label>
+                        </div>
+                    </div>
+                    <div class="col-md mb-3">
+                        <div class="form-floating">
+                            <input type="password" name="confirme" class="form-control" id="confirme"
+                                   pattern=".{4,}" required title="Mínimo de 4 caracteres" required
+                                   placeholder="Confirme a senha"/>
+                            <label for="confirme">Confirme a senha</label>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input type="email" name="email" class="form-control" id="email"
+                               value="{{ usuario.email }}" required placeholder="E-mail"/>
+                        <label for="email">E-mail</label>
+                    </div>
+                </div>
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <div class="form-check form-switch col-md mt-3">
+                            <label class="form-label" for="administrador">É administrador</label>
+                            <input class="form-check-input form" type="checkbox" role="switch" name="administrador"
+                                   id="administrador" {% if usuario.eAdministrador == true %}checked{% endif %}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container text-center">
+                <div class="row justify-content-center">
+                    <div class="form-group col-md-{{ numCol }} ml-auto mr-auto">
+                        <button type="submit" class="btn btn-primary">
+                            {% if editar %}Alterar{% endif %}{% if inserir %}Inserir{% endif %}
+                        </button>
+                        {% if alterarSenha %}
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#alterarSenha">
+                                Alterar senha
+                            </button>
+                        {% endif %}
+                        {% if deletarUsuario %}
+                            <button type="button" class="btn btn-danger"
+                                    onclick="window.location.href='/usuario/deletar/{{ usuario.codUsuario }}'">
+                                Deletar
+                            </button>
+                        {% endif %}
+                        <button type="button" class="btn btn-secondary"
+                                onclick="window.location.href='/usuario'">
+                            Voltar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="modal fade" data-bs-backdrop="static" data-db-keyboard="true" id="alterarSenha" tabindex="-1"
+             aria-labelledby="#labelAlterarSenha" aria-hidden="true">
+            <form method="post" action="/usuario/{{ usuario.codUsuario }}/alterarSenha">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="labelAlterarSenha">Alterar senha</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                {% if usuarioAtual %}
+                                <div class="col-md mb-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="password" name="password" id="senha" class="form-control"
+                                               placeholder="Senha atual" required/>
+                                        <input type="hidden" name="id" id="idSenha" value="{{ usuario.codUsuario }}">
+                                        <label for="senha">Senha atual</label>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class="col-md mb-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="hidden" name="usuario" value="{{ usuario.codUsuario }}"/>
+                                        <input type="password" name="senha" id="senhanova" class="form-control"
+                                               pattern=".{4,}" required
+                                               title="Mínimo de 4 caracteres" required placeholder="Nova Senha"/>
+                                        <label for="senhanova">Nova senha</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md mb-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="password" name="confirma" id="senhaconfirma" class="form-control"
+                                               pattern=".{4,}"
+                                               required title="Mínimo de 4 caracteres" required
+                                               placeholder="Repita a nova senha"/>
+                                        <label for="senhaconfirma">Repita a nova senha</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container text-center">
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-md-12 ml-auto mr-auto">
+                                        <button type="submit" class="btn btn-primary">
+                                            Alterar senha
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "menu.twig" %}
+
+{% block conteudo %}
+    <div class="container pt-5">
+        <form action="/consulta/{{ consulta }}/membro/{{ membro.codMembroComissao }}/alterar"
+              method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-floating col-md-12">
+                        <input type="hidden" name="consulta"
+                               value="{{ consulta }}">
+                        <select type="search" class="form-select"
+                                data-placeholder="Selecione a pessoa" name="pessoa" id="pessoa"
+                                required>
+                            <option value=""></option>
+                            {% for pessoa in usuarios %}
+                                <option value="{{ pessoa.codUsuario }}"
+                                        {% if pessoa.codUsuario == idMembro %}selected{% endif %}>{{ pessoa.cpf }}
+                                    - {{ pessoa.nome }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="pessoa">Nome:</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-floating col-md-12">
+                        <select class="form-select" name="cargo" id="cargo" data-placeholder="Selecione o cargo"required>
+                            {% for cargo in cargos %}
+                                <option value="{{ cargo.codCargoComissao }}"
+                                        {% if cargo.codCargoComissao == membro.codCargoComissao %}selected{% endif %}>{{ cargo.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="cargo">Permissão:</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-3 pt-4 pb-3">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary"
+                            onclick="window.location.href='/consulta/{{ consulta }}'">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

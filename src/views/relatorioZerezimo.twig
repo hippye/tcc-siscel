@@ -1,0 +1,69 @@
+{% extends 'home.twig' %}
+
+{% block conteudo %}
+    <div class="row pt-3 text-center">
+        <div class="col">
+            <button type="button" class="btn btn-secondary"
+                    onclick="window.close()">
+                Voltar
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="h4 text-center col-md-12 ms-auto me-auto">
+            Zerézimo do pleito: {{ consulta.descricao }}
+        </div>
+    </div>
+    {% if dataZerezimo %}
+{#        TODO: Implementar a exibição dos dados do zerezimo#}
+        <div class="row pt-3 text-center">
+            <div class="col">
+                <h4>A data que foi realizado o zerézimo foi: {{ dataZerezimo }}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12 text-center">
+                <h4>A consulta eleitoral não possui erros na proporção dos votos.</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12 text-center">
+                <h4>Não foram encontrados outros erros na consulta eleitoral.</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 me-auto ms-auto">
+                <table class="table table-borderless table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>
+                            Nome da Urna
+                        </th>
+                        <th>
+                            Qtde. de votos
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for urna in urnas  %}
+                    <tr>
+                        <td>
+                            {{  urna.descricao }}
+                        </td>
+                        <td class="text-center">
+                            0
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="row pt-3 text-center">
+            <div class="col">
+                <h4>Esse pleito ainda não realizou o zerézimo! Verifique se as cédulas já foram congeladas.</h4>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "home.twig" %}
+
+{% block conteudo %}
+    <div class="container">
+        <div class="row p-5">
+            <div class="container col-md-4 bg-dark-subtle rounded-1">
+                <h4 class="text-center">Login</h4>
+                <form method="post" action="{{ actionLogin }}">
+                    <div class="form-group">
+                        <label for="username">Usuário</label>
+                        <input class="form-control" type="text" size="11" maxlength="11" name="username" id="username"
+                               value="{{ cpf }}" alt="Deve conter apenas números"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input class="form-control" type="password" name="password" id="password"/>
+                    </div>
+                    <div class="form-group pt-4 text-center">
+                        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                    </div>
+                    <div class="or-container">
+                        <div class="line-separator"></div>
+                        <div class="or-label">ou</div>
+                        <div class="line-separator"></div>
+                    </div>
+                    <div id="g_id_onload"
+                         data-client_id="422558301435-tu04voi0krousq6e90js1jdlv7vlase9.apps.googleusercontent.com"
+                         data-context="signin"
+                         data-ux_mode="popup"
+                         data-login_uri="siscel.vr.uff.br/login/google"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="outline"
+                         data-text="signin_with."
+                         data-size="large"
+                         data-logo_alignment="left">
+                    </div>
+                    <div class="form-group text-center p-4">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

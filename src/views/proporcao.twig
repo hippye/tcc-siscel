@@ -1,0 +1,47 @@
+{% extends "menu.twig" %}
+
+{% block conteudo %}
+    <div class="row pt-5">
+        <div class="container">
+            <form action="/consulta/{{ consulta }}/proporcao/{{ proporcao.codProporcao }}/alterar"
+                  method="post">
+                <div class="row">
+                    <div class="col-md mb-3">
+                        <div class="form-floating">
+                            <input type="hidden" name="consulta"
+                                   value="{{ attribute(consulta, 'getCodConsultaEleitoral') }}">
+                            <select name="vinculo" class="form-select" id="vinculo" required>
+                                {% for vinculo in vinculos %}
+                                    <option value="{{ vinculo.codVinculo }}" {% if vinculo.codVinculo == proporcao.codvinculo %}selected{% endif %}>
+                                        {{ vinculo.descricao }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <label for="vinculo">Vinculo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md mb-3">
+                        <div class="form-floating">
+                            <input type="number" name="peso" class="form-control" value="{{ proporcao.peso }}"
+                                   id="peso" required/>
+                            <label for="peso">Peso</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-md-3 pt-4 pb-3">
+                        <button type="submit" class="btn btn-primary">
+                            Salvar
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                onclick="/consulta/{{ consulta }}">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

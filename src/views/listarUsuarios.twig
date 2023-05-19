@@ -1,0 +1,33 @@
+{% extends "menu.twig" %}
+
+{% block conteudo %}
+    <div class="container">
+        <div class="col-md-12 mr-auto p-2 input-group">
+            <input type="search" placeholder="Pesquisar" id="filtro" class="form-control" aria-controls="listagem"
+            onkeyup="tabelaPessoas.search((this).value).draw()">
+            <div class="input-group-append">
+                <button class="btn btn-secondary">
+                    <i class="bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <table class="table table-borderless table-striped table-hover table-responsive-md" id="listagem">
+            <thead class="table-light">
+                <tr>
+                    <td>
+                        CPF - Nome
+                    </td>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            {% for item in usuarios %}
+                <tr onclick="window.location.href='{{ raiz }}/{{ item.codUsuario }}'">
+                    <td>
+                        <i class="bi-pencil-square"></i> {{ item.cpf }} - {{ item.nome }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

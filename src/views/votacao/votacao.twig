@@ -1,0 +1,72 @@
+{% extends 'votacao/inicio.twig' %}
+
+{% block conteudo %}
+    <div class="container justify-content-center">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">{{ titulo }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div id="barra-progresso">
+                <table id="tabela-progresso">
+                    <tbody>
+                    <tr>
+                        <td class="unselected">
+                            1) Selecione
+                        </td>
+                        <td class="selected">
+                            2) Revise
+                        </td>
+                        <td class="unselected">
+                            3) Registre
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 p-4">
+                <h3><strong>Selecione a chapa:</strong></h3>
+            </div>
+        </div>
+        <form method="post" action="/votacao/revisar/{{ idVotacao }}" id="cedula">
+            <div class="row">
+                <div class="col-md-12">
+                    {% for item in chapas %}
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="chapa{{ item.codChapa }}" name="chapa"
+                                   value="{{ item.codChapa }}">
+                            <label for="chapa{{ item.codChapa }}" class="form-check-label">
+                                {{ item.descricao }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="votoNulo" name="chapa" value="nulo">
+                        <label for="votoNulo" class="form-check-label">
+                            Voto Nulo
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="votoBranco" name="chapa" value="branco" checked>
+                        <label for="votoBranco" class="form-check-label">
+                            Voto em Branco
+                        </label>
+                        <input type="hidden" name="idVotacao" value="{{ idVotacao }}">
+                        <input type="hidden" name="urna" value="{{ urna }}">
+                        <input type="hidden" name="vinculo" value="{{ vinculo }}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container justify-content-center text-center p-4">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Próximo</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

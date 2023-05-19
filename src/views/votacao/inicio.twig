@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="content-language" content="pt-br"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="/css/siscel.css" rel="stylesheet">
+    {% block script %}{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"
+            defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"
+            defer></script>
+    <script src="/js/siscel.js" defer></script>
+    <title>SisCEl {{ PAGINA }}</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="container align-content-center">
+            <div class="card w-75 mt-5 ms-auto me-auto">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-11 text-center">
+                            <h2>SisCEl - Sistema de Consultas Eleitorais</h2>
+                        </div>
+                        <div class="col-md-1 text-end align-self-center">
+                            <a href="/votacao/logout/{{ idVotacao }}" class="text-end">Sair</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% block conteudo %}
+                        <div class="container justify-content-center">
+                            <div class="row">
+                                <div class="text-center">
+                                    <h6>
+                                        <strong>{{ consulta.descricao }}</strong>
+                                    </h6>
+                                    <p>
+                                        A consulta eleitoral está ocorrendo das
+                                        <strong>{{ consulta.horaInicio|date("H:i") }}</strong> do dia
+                                        <strong>{{ consulta.dataInicio|date("d/m/Y") }}</strong> até as
+                                        <strong>{{ consulta.horaEncerramento|date("H:i") }}</strong> do dia
+                                        <strong>{{ consulta.dataEncerramento|date("d/m/Y") }}</strong> (horário oficial
+                                        de Brasília).
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                Para realizar a votação, siga os seguintes passos:
+                                <ol type="1">
+                                    <li><strong>Selecione</strong> sua opção.</li>
+                                    <li><strong>Revise</strong> sua escolha.</li>
+                                    <li><strong>Registre</strong> seu voto.</li>
+                                </ol>
+                            </div>
+                            <div class="row">
+                                <div class="container text-center">
+                                    <form method="post" action="/votacao/cedula/{{ idVotacao }}">
+                                        <input type="hidden" name="votacao" value="{{ idVotacao }}">
+                                        <input type="hidden" name="eleitor" value="{{ idEleitor }}">
+                                        <button type="submit" class="btn btn-primary">Iniciar</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="container text-start">
+                                    Você pode <a href="email://cesar.daer@gmail.com">solicitar ajuda</a> por e-mail
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

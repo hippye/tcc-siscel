@@ -1,0 +1,184 @@
+{% extends 'home.twig' %}
+
+{% block conteudo %}
+    <div class="row">
+        <div class="h4 col-md-8 mr-auto ml-auto">
+            Resultados do pleito: {{ consulta.descricao }}
+        </div>
+    </div>
+    <div class="row pt-3 text-center">
+        <div class="form-group btn-group col-md-12 mr-auto ml-auto">
+            <button type="button" class="btn btn-success d-none"
+                    onclick="window.open('/consulta/{{ consulta.codConsultaELeitora }}')">
+                Ver resultado por Urnas
+            </button>
+            <button type="button" class="btn btn-secondary"
+                    onclick="window.close()">
+                Voltar
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container text-center">
+            <div class="h5 col-md text-nowrap">
+                Ata de participação - Totalização dos votos
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <p class="col-md-4 text-right">
+                <b>Total de votantes:</b>
+            </p>
+            <p class="col-md-4 text-left">
+                {{ totalVotantes }}
+            </p>
+        </div>
+        <div class="row">
+            <p class="col-md-4 ml-auto text-right">
+                <b>Total de votantes válidos:</b>
+            </p>
+            <p class="col-md-4 mr-auto text-left">
+                {{ totalValidos }}
+            </p>
+        </div>
+        <div class="row">
+            <p class="col-md-4 ml-auto text-right">
+                <b>Total de votantes ausentes:</b>
+            </p>
+            <p class="col-md-4 mr-auto text-left">
+                {{ totalAusentes }}
+            </p>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <b>Totalização por vinculo:</b>
+            </div>
+        </div>
+        <table class="table table-borderless table-striped table-hover table-responsive-md">
+            <thead class="table-light">
+            <tr>
+                <th scope="col" class="text-center">
+                    Vinculo
+                </th>
+                <th scope="col" class="text-center">
+                    <b>Urna</b>
+                </th>
+                <th scope="col" class="text-center">
+                    <b>Voto</b>
+                </th>
+                <th scope="col" class="text-center">
+                    <b>Total</b>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            {% set totalGeral = 0 %}
+            {% for item in totalizacao %}
+                <tr>
+                    <td>
+                        {{ item.descVinculo }}
+                    </td>
+                    <td>
+                        {{ item.descUrna }}
+                    </td>
+                    <td>
+                        {% if item.votoNulo %}
+                            Voto nulo
+                        {% elseif item.votoBranco %}
+                            Voto branco
+                        {% else %}
+                            {{ item.descChapa }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ item.total }}
+                        {% set totalGeral = totalGeral + item.total %}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <b>Total geral:</b>
+                </td>
+                <td>
+                    {{ totalGeral }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{#    <div class="container-fluid">#}
+{#        <div class="row">#}
+{#            <div class="col-md-12">#}
+{#                <b>Totalização ajustada:</b>#}
+{#            </div>#}
+{#        </div>#}
+{#        <table class="table table-borderless table-striped table-hover table-responsive-md">#}
+{#            <thead class="table-light">#}
+{#            <tr>#}
+{#                <th scope="col" class="text-center">#}
+{#                    Vinculo#}
+{#                </th>#}
+{#                <th scope="col" class="text-center">#}
+{#                    <b>Urna</b>#}
+{#                </th>#}
+{#                <th scope="col" class="text-center">#}
+{#                    <b>Voto</b>#}
+{#                </th>#}
+{#                <th scope="col" class="text-center">#}
+{#                    <b>Total</b>#}
+{#                </th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody class="table-group-divider">#}
+{#            {% set totalGeral = 0 %}#}
+{#            {% for item in totalizacaoAjustada %}#}
+{#                <tr>#}
+{#                    <td>#}
+{#                        {{ item.descVinculo }}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {{ item.descUrna }}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% if item.votoNulo %}#}
+{#                            Voto nulo#}
+{#                        {% elseif item.votoBranco %}#}
+{#                            Voto branco#}
+{#                        {% else %}#}
+{#                            {{ item.descChapa }}#}
+{#                        {% endif %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {{ item.total }}#}
+{#                        {% set totalGeral = totalGeral + item.total %}#}
+{#                    </td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{#            <tr>#}
+{#                <td>#}
+{#                    <b>Total geral:</b>#}
+{#                </td>#}
+{#                <td>#}
+{#                    {{ totalGeral }}#}
+{#                </td>#}
+{#            </tr>#}
+{#            </tbody>#}
+{#        </table>#}
+{#    </div>#}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 mr-auto ml-auto">
+                <b>Resultado da votação:</b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 mr-auto ml-auto">
+                <p><b>A chapa vencedora é a {{ chapa }} com o total de {{ totalVotos }}% dos votos!</b></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
